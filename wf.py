@@ -29,7 +29,7 @@ sky_images = {
     "snow": "images/snow.png",
 }
 
-#sm.image("images/Covenant-University.png", width=200)
+sm.image("images/Covenant-University.png", width=200)
 sm.title("Weather Forecast")
 
 sm.markdown("""
