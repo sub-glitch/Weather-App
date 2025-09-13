@@ -89,31 +89,22 @@ def get_location_by_ip():
         return data.get("city", "")
     except requests.exceptions.RequestException:
         sm.warning(
-            "Could not determine location by IP. "
-            "Please enter a city manually."
+            "Could not determine location by IP. " "Please enter a city manually."
         )
         return ""
 
 
-place = sm.text_input(
-    "Enter a location:", value=get_location_by_ip()
-)
-days = sm.slider(
-    "Days: ", min_value=1, max_value=7, help="Select forecast days"
-)
+place = sm.text_input("Enter a location:", value=get_location_by_ip())
+days = sm.slider("Days: ", min_value=1, max_value=7, help="Select forecast days")
 option = sm.selectbox("Select data to view", ("Temperature", "Sky"))
-sm.subheader(
-    f"{option} for the next {days} days in {place}"
-)
+sm.subheader(f"{option} for the next {days} days in {place}")
 
 if place:
     try:
         filter_data = get_data(place, days)
 
         if option == "Temperature":
-            temperatures = [
-                entry["main"]["temp"] for entry in filter_data
-            ]
+            temperatures = [entry["main"]["temp"] for entry in filter_data]
             dates = [entry["dt_txt"] for entry in filter_data]
             figure = pef.line(
                 x=dates,
@@ -130,19 +121,14 @@ if place:
                 key="sky_time_selector",
             )
             selected_entry = next(
-                (entry for entry in filter_data
-                 if entry["dt_txt"] == selected_time),
+                (entry for entry in filter_data if entry["dt_txt"] == selected_time),
                 None,
             )
 
             if selected_entry:
                 description = selected_entry["weather"][0]["description"]
-                message = sky_messages.get(
-                    description, description.capitalize()
-                )
-                image_path = sky_images.get(
-                    description, "images/cloud.png"
-                )
+                message = sky_messages.get(description, description.capitalize())
+                image_path = sky_images.get(description, "images/cloud.png")
                 if "rain" in description or "drizzle" in description:
                     sm.toast(
                         "☔️ Get an umbrella, it's going to rain!",
@@ -184,16 +170,13 @@ if place:
             sm.subheader("📍 Google Map of Location")
 
             map_url = (
-                f"https://www.google.com/maps?q={lat},{lon}"
-                "&hl=es;z=14&output=embed"
+                f"https://www.google.com/maps?q={lat},{lon}" "&hl=es;z=14&output=embed"
             )
-            sm.components.v1.iframe(
-                map_url, width=700, height=450
-            )
+            sm.components.v1.iframe(map_url, width=700, height=450)
         else:
             sm.warning("Could not find location on map.")
 
-    except Exception as e:   # ✅ FIX: except must align with try
+    except Exception as e:  # ✅ FIX: except must align with try
         sm.error(f"An error occurred: {e}")
 
     sm.markdown(
