@@ -26,3 +26,9 @@ jobs:
    - name: Run basic check
      run: |
       python -m py_compile wf.py
+
+   - name: Run Linting
+     run: flake8
+
+  -name: Run Tests
+  run: pytest
