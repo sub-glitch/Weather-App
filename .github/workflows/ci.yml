@@ -27,6 +27,9 @@ jobs:
      run: |
       python -m py_compile wf.py
 
+   - name: Run Black(check formatting)
+     run: black --check .
+
    - name: Run Linting
      run: flake8
 
