@@ -27,8 +27,8 @@ jobs:
      run: |
       python -m py_compile wf.py
 
-        - name: Add project to PYTHONPATH
-        run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
+   - name: Add project to PYTHONPATH
+     run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
 
 
    - name: Run Tests
